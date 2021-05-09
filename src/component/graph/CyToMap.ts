@@ -106,7 +106,7 @@ export function toMap(graphAreaElement, graph, cy) {
         geoIRI = item; // TODO: zatim beru pouze posledni IRI o poloze. Pozdeji prepinat
     }
 
-    const elements = [
+    /*const elements = [
         ...nodes.filter(hasLonLng(geoIRI)).map(function (node) {
             let ret = {};
             ret['group'] = 'nodes';
@@ -124,7 +124,7 @@ export function toMap(graphAreaElement, graph, cy) {
         //...edges.map(edge => ({ group: 'edges', data: edge }))
     ];
 
-    cy.add(elements);
+    cy.add(elements);*/
 
     /*const cy = cytoscape({
         container: document.getElementById('graph'),
@@ -158,6 +158,7 @@ export function toMap(graphAreaElement, graph, cy) {
 
     let cyMap;
     cyMap = cy.mapboxgl({
+        container: graphAreaElement, // Kradu komponentu! Container id
                 accessToken: 'pk.eyJ1IjoibWlyb3BpciIsImEiOiJja2xmZGtobDAyOXFnMnJuMGR4cnZvZTA5In0.TPg2_40hpE5k5v65NmdP5A',
                 style: {
                     'version': 8,
@@ -181,14 +182,14 @@ export function toMap(graphAreaElement, graph, cy) {
                 }
             }, {
             getPosition: (node) => {
-                    let nodeLat = getLonLng(node, 1, geoIRI);
-                    let nodeLng = getLonLng(node, 0, geoIRI);
+                    let nodeLat = getLonLng(node._private.data, 1, geoIRI);
+                    let nodeLng = getLonLng(node._private.data, 0, geoIRI);
                     return [nodeLng, nodeLat];
                         //return [node._private.data('lng'), node._private.data('lat')];
                     },
                     setPosition: (node, lngLat) => {
-                        node.data('lng', lngLat.lng);
-                        node.data('lat', lngLat.lat);
+                        node._private.data('lng', lngLat.lng);
+                        node._private.data('lat', lngLat.lat);
                     },
                     animate: true,
                     animationDuration: 1000,

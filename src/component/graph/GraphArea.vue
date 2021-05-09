@@ -142,7 +142,7 @@
             if (this.mapMode) {
                 this.map = toMap(<Element>this.$refs.graphd, this.graph, this.cy);
             } else {
-
+                // TODO
             }
         }
 
